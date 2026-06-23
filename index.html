@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nishil @ Portfolio</title>
+  
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    /* Design Tokens */
+    :root {
+      --bg: #0a0d0c;
+      --panel: #101513;
+      --panelAlt: #0d1211;
+      --border: #243029;
+      --text: #cfd9d2;
+      --dim: #728077;
+      --accent: #7CFFB2;
+      --accent2: #FFB454;
+      --accent3: #FF6B6B;
+      --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    }
+
+    /* Base Styles */
+    body {
+      font-family: var(--font-mono);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    * { box-sizing: inherit; }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Utilities */
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blink 1s step-start infinite;
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem;
+    }
+
+    /* Terminal Chrome */
+    .terminal-window {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6);
+    }
+
+    .terminal-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mac-btn {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+    }
+    .mac-btn.close { background: var(--accent3); }
+    .mac-btn.min { background: var(--accent2); }
+    .mac-btn.max { background: var(--accent); }
+
+    .header-text {
+      margin-left: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .terminal-body {
+      padding: 1.75rem 1.5rem;
+      background: var(--bg);
+    }
+
+    /* Prompt Line Styles */
+    .prompt-block {
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .prompt-block.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .prompt-header {
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+
+    .p-user { color: var(--accent2); }
+    .p-colon { color: var(--dim); }
+    .p-tilde { color: var(--accent); }
+    .p-dollar { color: var(--dim); }
+    .p-cmd { color: var(--text); font-weight: 600; }
+
+    .prompt-content {
+      margin-top: 0.6rem;
+      padding-left: 0.1rem;
+    }
+
+    /* Project Row */
+    .project-row {
+      display: block;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      background: var(--panelAlt);
+      border-radius: 6px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.7rem;
+      transition: all 0.2s ease;
+    }
+
+    .project-row:hover {
+      border-color: var(--accent);
+      background: rgba(124,255,178,0.05);
+    }
+
+    .project-row:hover .p-name, .project-row:hover .lucide-folder {
+      color: var(--accent) !important;
+    }
+
+    .p-header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .p-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .p-name { color: var(--text); font-weight: 700; transition: color 0.2s; }
+    .p-perms { color: var(--dim); font-size: 0.78rem; }
+    .p-type { color: var(--accent2); font-size: 0.78rem; }
+    .p-tag {
+      font-size: 0.68rem;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 3px;
+      padding: 0.05rem 0.4rem;
+    }
+    
+    .p-desc {
+      color: var(--dim);
+      font-size: 0.85rem;
+      margin-top: 0.35rem;
+      padding-left: 1.4rem;
+    }
+
+    .p-tap {
+      color: var(--dim);
+      font-size: 0.78rem;
+      margin-top: 0.3rem;
+      padding-left: 1.4rem;
+    }
+
+    /* Panels & Chips */
+    .neofetch-panel {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.95rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.1rem 1.3rem;
+      background: var(--panel);
+    }
+
+    .neofetch-art {
+      color: var(--accent);
+      font-size: 0.62rem;
+      line-height: 1.05;
+      margin: 0;
+      align-self: center;
+    }
+
+    .nmap-panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      background: var(--panel);
+      font-size: 0.82rem;
+    }
+
+    .nmap-grid {
+      display: grid;
+      grid-template-columns: 90px 70px 1fr;
+      row-gap: 0.3rem;
+      color: var(--dim);
+    }
+
+    .chip-container { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .interest-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.5rem 0.8rem;
+      background: var(--panelAlt);
+      color: var(--text);
+      font-size: 0.82rem;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      border-radius: 5px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="mac-btn close"></span>
+        <span class="mac-btn min"></span>
+        <span class="mac-btn max"></span>
+        <span class="header-text">
+          <i data-lucide="terminal" style="width:12px; height:12px;"></i> nishil@portfolio: ~
+        </span>
+      </div>
+
+      <div class="terminal-body">
+        
+        <div class="prompt-block visible" id="prompt-whoami">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span>
+            <span class="p-colon">:</span>
+            <span class="p-tilde">~</span>
+            <span class="p-dollar">$</span>
+            <span class="p-cmd">whoami</span>
+          </div>
+          <div class="prompt-content">
+            <p style="font-size: 1.05rem; line-height: 1.6; color: var(--text); min-height: 2.6em; margin: 0;">
+              <span id="typed-text"></span><span class="cursor-blink" id="main-cursor">▍</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-about">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">cat about.md</span>
+          </div>
+          <div class="prompt-content">
+            <p style="font-size: 0.92rem; line-height: 1.7; color: var(--dim); margin: 0;">
+              I'm a tech enthusiast and cybersecurity learner, working toward a B.Tech in Computer
+              Science Engineering and putting most of my time into ethical hacking, penetration testing, and
+              OSINT. I build small CLI tools alongside that — partly to sharpen the same skills,
+              partly because I'd rather script a problem than click through it.
+            </p>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-edu">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">cat education.md</span>
+          </div>
+          <div class="prompt-content">
+            <div style="border: 1px solid var(--border); border-radius: 6px; padding: 0.85rem 1rem; background: var(--panelAlt); font-size: 0.85rem;">
+              <div style="color: var(--accent); font-weight: 700;">B.Tech, Computer Science Engineering</div>
+              <div style="color: var(--dim); margin-top: 0.2rem;">Graphic Era Deemed to be University · 2024 – 2028</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-nmap">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">nmap -sV --top-skills nishil</span>
+          </div>
+          <div class="prompt-content">
+            <div class="nmap-panel">
+              <div style="color: var(--dim); margin-bottom: 0.6rem;">
+                Starting Nmap on <span style="color: var(--accent);">nishil-skills</span> ...
+              </div>
+              <div class="nmap-grid">
+                <span>PORT</span><span>STATE</span><span>SERVICE</span>
+                <span style="color: var(--text);">22/tcp</span><span style="color: var(--accent);">open</span><span style="color: var(--accent2);">programming</span>
+                <span style="color: var(--text);">443/tcp</span><span style="color: var(--accent);">open</span><span style="color: var(--accent2);">ethical-pentesting</span>
+                <span style="color: var(--text);">1337/tcp</span><span style="color: var(--accent);">open</span><span style="color: var(--accent2);">metasploit</span>
+                <span style="color: var(--text);">8080/tcp</span><span style="color: var(--accent);">open</span><span style="color: var(--accent2);">osint-recon</span>
+                <span style="color: var(--text);">31337/tcp</span><span style="color: var(--accent);">open</span><span style="color: var(--accent2);">hacking</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-neo">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">neofetch</span>
+          </div>
+          <div class="prompt-content">
+            <div class="neofetch-panel">
+<pre class="neofetch-art">      /\
+     /  \
+    /----\
+   /  []  \
+  /________\
+  |  ____  |
+  |_|    |_|</pre>
+              <div style="display: grid; row-gap: 0.3rem; font-size: 0.82rem;">
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">OS</span><span style="color: var(--text);">macOS (Apple Silicon)</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Host</span><span style="color: var(--text);">MacBook Air M3 / 16GB</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Terminal</span><span style="color: var(--text);">WezTerm / Ghostty / Kitty</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Theme</span><span style="color: var(--text);">0x96f</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Editor</span><span style="color: var(--text);">Neovim</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Local AI</span><span style="color: var(--text);">Ollama + Jan AI</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Toolkit</span><span style="color: var(--text);">Metasploit, NotAFish, netch</span></div>
+                <div style="display: grid; grid-template-columns: 110px 1fr;"><span style="color: var(--accent2); font-weight: 700;">Focus</span><span style="color: var(--text);">pentesting, OSINT, security research</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-proj">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">ls -la projects/</span>
+          </div>
+          <div class="prompt-content">
+            <a href="https://github.com/realnishil/notafish" target="_blank" class="project-row">
+              <div class="p-header-top">
+                <div class="p-meta">
+                  <i data-lucide="folder" style="width:15px; height:15px; color:var(--dim);"></i>
+                  <span class="p-name">NotAFish</span>
+                  <span class="p-perms">-rwxr-xr-x</span>
+                  <span class="p-type">python</span>
+                  <span class="p-tag">phishing defense</span>
+                </div>
+                <i data-lucide="external-link" style="width:13px; height:13px; color:var(--dim);"></i>
+              </div>
+              <div class="p-desc">Phishing URL checker. MIT licensed, installable via Homebrew.</div>
+              <div class="p-tap">$ brew tap realnishil/notafish</div>
+            </a>
+            
+            <a href="https://github.com/realnishil/netch" target="_blank" class="project-row">
+              <div class="p-header-top">
+                <div class="p-meta">
+                  <i data-lucide="folder" style="width:15px; height:15px; color:var(--dim);"></i>
+                  <span class="p-name">netch</span>
+                  <span class="p-perms">-rwxr-xr-x</span>
+                  <span class="p-type">bash</span>
+                  <span class="p-tag">recon</span>
+                </div>
+                <i data-lucide="external-link" style="width:13px; height:13px; color:var(--dim);"></i>
+              </div>
+              <div class="p-desc">Lightweight network info tool for the terminal — useful for quick recon.</div>
+              <div class="p-tap">$ brew tap realnishil/netch</div>
+            </a>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-focus">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">cat focus.txt</span>
+          </div>
+          <div class="prompt-content">
+            <div class="chip-container">
+              <div class="interest-chip"><i data-lucide="shield-half" style="width:14px; height:14px; color:var(--accent);"></i> ethical hacking</div>
+              <div class="interest-chip"><i data-lucide="lock" style="width:14px; height:14px; color:var(--accent);"></i> penetration testing</div>
+              <div class="interest-chip"><i data-lucide="search" style="width:14px; height:14px; color:var(--accent);"></i> OSINT</div>
+              <div class="interest-chip"><i data-lucide="cpu" style="width:14px; height:14px; color:var(--accent);"></i> Metasploit</div>
+              <div class="interest-chip"><i data-lucide="terminal" style="width:14px; height:14px; color:var(--accent);"></i> security tooling / CLI</div>
+              <div class="interest-chip"><i data-lucide="keyboard" style="width:14px; height:14px; color:var(--accent);"></i> mechanical keyboards</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-contact">
+          <div class="prompt-header">
+            <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+            <span class="p-cmd">open contact</span>
+          </div>
+          <div class="prompt-content">
+            <div class="chip-container">
+              <a href="https://github.com/realnishil" target="_blank" class="contact-btn"><i data-lucide="code-2" style="width:15px; height:15px;"></i> GitHub</a>
+              <a href="https://www.linkedin.com/in/nishilbhimani" target="_blank" class="contact-btn"><i data-lucide="briefcase" style="width:15px; height:15px;"></i> LinkedIn</a>
+              <a href="https://www.self.so/nishil" target="_blank" class="contact-btn"><i data-lucide="link" style="width:15px; height:15px;"></i> self.so/nishil</a>
+              <a href="mailto:bhimaninishil@gmail.com" class="contact-btn"><i data-lucide="mail" style="width:15px; height:15px;"></i> Email</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-block" id="prompt-final" style="display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0;">
+          <span class="p-user">nishil@portfolio</span><span class="p-colon">:</span><span class="p-tilde">~</span><span class="p-dollar">$</span>
+          <span class="cursor-blink">▍</span>
+        </div>
+
+      </div>
+    </div>
+    
+    <div style="text-align: center; color: var(--dim); font-size: 0.72rem; margin-top: 1.5rem;">
+      built with too many terminals open at once
+    </div>
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // Typing Effect Logic
+    const textToType = "Nishil Bhimani — cybersecurity learner, ethical hacker, and CLI tool builder.";
+    const speed = 24;
+    const startDelay = 500;
+    
+    let i = 0;
+    const typeWriter = () => {
+      if (i < textToType.length) {
+        document.getElementById("typed-text").innerHTML += textToType.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+      } else {
+        document.getElementById("main-cursor").style.display = 'none'; // Optional: hide cursor after typing
+      }
+    };
+
+    setTimeout(typeWriter, startDelay);
+
+    // Staggered Prompt Delays (matching React logic)
+    const blockDelays = [
+      { id: 'prompt-about', delay: 2000 },
+      { id: 'prompt-edu', delay: 2400 },
+      { id: 'prompt-nmap', delay: 2800 },
+      { id: 'prompt-neo', delay: 3200 },
+      { id: 'prompt-proj', delay: 3600 },
+      { id: 'prompt-focus', delay: 4000 },
+      { id: 'prompt-contact', delay: 4400 },
+      { id: 'prompt-final', delay: 4800 }
+    ];
+
+    blockDelays.forEach(block => {
+      setTimeout(() => {
+        const el = document.getElementById(block.id);
+        if (el) el.classList.add('visible');
+      }, block.delay);
+    });
+  </script>
+</body>
+</html>
