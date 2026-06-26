@@ -124,8 +124,8 @@ function About() {
             <ul className=" mt-4 leading-tight tracking-tight text-sm md:text-base w-5/6 md:w-3/4 emoji-list">
                 <li className=" list-pc">I'm a <span className=" font-medium">Computer Science Engineering undergrad</span> at <u className=' cursor-pointer '> <a href="https://www.geu.ac.in/" target={"_blank"} rel="noreferrer">Graphic Era Deemed to be University</a> </u> (B.Tech, 2024 – 2028), focused on cybersecurity. ( Hit me up <a className='text-underline' href='mailto:nishilbhimani@yahoo.com'><u>@nishilbhimani@yahoo.com</u></a> :) )</li>
                 <li className=" mt-3 list-building"> I enjoy building open-source CLI tools, poking at security tooling, and exploring OSINT & ethical penetration testing.</li>
-                <li className=" mt-3 list-time"> When I'm not at the terminal, I'm ricing my Arch Linux setup, competing in CP contests, or tinkering with local LLM infra on Jan AI / Ollama.</li>
-                <li className=" mt-3 list-star"> Daily driver: <span className="font-medium">Arch Linux</span> on a MacBook Air M3 — Neovim, WezTerm/Ghostty/Kitty, and a terminal-first workflow for pretty much everything.</li>
+                <li className=" mt-3 list-time"> When I'm not at the terminal, I'm running NixOS, Kali Linux, and Ubuntu in VirtualBox, competing in CP contests, or tinkering with local LLM infra on Jan AI.</li>
+                <li className=" mt-3 list-star"> Daily driver: <span className="font-medium">macOS</span> on a MacBook Air M3 — with NixOS, Kali Linux, and Ubuntu running in VirtualBox, Neovim, WezTerm/Ghostty/Kitty, and a terminal-first workflow for pretty much everything.</li>
             </ul>
         </>
     )
@@ -186,7 +186,10 @@ function Skills() {
                         <img src="https://img.shields.io/badge/-Git-%23F05032?style=flat&logo=git&logoColor=%23ffffff" alt="nishil git" className="m-1" />
                         <img src="https://img.shields.io/badge/-Neovim-57A143?style=flat&logo=neovim&logoColor=white" alt="nishil neovim" className="m-1" />
                         <img className="m-1" src="http://img.shields.io/badge/-Linux-0078D6?style=plastic&logo=linux&logoColor=ffffff" alt="nishil linux" />
-                        <img className="m-1" src="https://img.shields.io/badge/-Arch%20Linux-1793D1?style=flat&logo=arch-linux&logoColor=white" alt="nishil arch linux" />
+                        <img className="m-1" src="https://img.shields.io/badge/-macOS-000000?style=flat&logo=apple&logoColor=white" alt="nishil macos" />
+                        <img className="m-1" src="https://img.shields.io/badge/-NixOS-5277C3?style=flat&logo=nixos&logoColor=white" alt="nishil nixos" />
+                        <img className="m-1" src="https://img.shields.io/badge/-Kali%20Linux-557C94?style=flat&logo=kalilinux&logoColor=white" alt="nishil kali linux" />
+                        <img className="m-1" src="https://img.shields.io/badge/-Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white" alt="nishil ubuntu" />
                     </div>
                 </div>
                 <div className="px-2 flex flex-wrap items-start w-1/2">
@@ -195,7 +198,7 @@ function Skills() {
                         <img className=" m-1" src="https://img.shields.io/badge/-Penetration_Testing-black?style=flat" alt="nishil pentesting" />
                         <img className=" m-1" src="https://img.shields.io/badge/-Homebrew-FBB040?style=flat&logo=homebrew&logoColor=white" alt="nishil homebrew" />
                         <img className=" m-1" src="https://img.shields.io/badge/-CLI%20Tooling-grey?style=flat" alt="nishil cli tooling" />
-                        <img className=" m-1" src="https://img.shields.io/badge/-Ollama-grey?style=flat" alt="nishil ollama" />
+                        <img className=" m-1" src="https://img.shields.io/badge/-Jan%20AI-grey?style=flat" alt="nishil jan ai" />
                     </div>
                 </div>
             </div>
@@ -205,15 +208,6 @@ function Skills() {
 
 function Projects() {
     const project_list = [
-        {
-            name: "Arch Desktop Portfolio",
-            date: "2026",
-            link: "https://github.com/realnishil/realnishil.github.io",
-            description: [
-                "This very portfolio website — a Linux desktop simulation built with Next.js & Tailwind CSS.",
-            ],
-            domains: ["javascript", "next.js", "tailwindcss"]
-        },
         {
             name: "NotAFish",
             date: "2026",
