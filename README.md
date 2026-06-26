@@ -1,7 +1,7 @@
 # Nishil Bhimani — Portfolio (Linux Desktop Simulation)
 
 A personal portfolio website themed as a Linux desktop, built with Next.js & Tailwind CSS.
-Originally based on the [vivek9patel/vivek9patel.github.io](https://github.com/vivek9patel/vivek9patel.github.io) template (MIT licensed), rebranded with my own info, projects and links.
+
 
 To run this on localhost:
 type `npm install` then `npm run dev`, and when you're done coding, `npm run build` to build the app.
