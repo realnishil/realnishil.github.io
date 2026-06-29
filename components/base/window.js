@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-import Settings from '../apps/settings';
+import dynamic from 'next/dynamic';
 import ReactGA from 'react-ga4';
 import { displayTerminal } from '../apps/terminal'
+
+const Settings = dynamic(() => import('../apps/settings'), { ssr: false });
 
 export class Window extends Component {
     constructor() {
@@ -283,7 +285,6 @@ export class WindowMainScreen extends Component {
         }
     }
     componentDidMount() {
-        console.log("here", this.props.screen);
         setTimeout(() => {
             this.setState({ setDarkBg: true });
         }, 3000);

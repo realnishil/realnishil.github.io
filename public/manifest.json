@@ -1,0 +1,22 @@
+{
+  "name": "Nishil Bhimani Portfolio",
+  "short_name": "realnishil",
+  "description": "Nishil Bhimani's personal portfolio — a Linux desktop simulation built with Next.js & Tailwind CSS.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#140717",
+  "theme_color": "#9966FF",
+  "icons": [
+    {
+      "src": "images/logos/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/logos/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

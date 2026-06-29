@@ -174,6 +174,10 @@ export class Terminal extends Component {
         $("#close-terminal").trigger('click');
     }
 
+    AVAILABLE_COMMANDS = "[ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg, whoami, neofetch, htop, man, gh-stats, cat, ssh, --help ]";
+
+    notFoundMsg = (main) => `Command '${main}' not found, or not yet implemented.<br>Available Commands: ${this.AVAILABLE_COMMANDS}`;
+
     handleCommands = (command, rowId) => {
         let words = command.split(' ').filter(Boolean);
         let main = words[0];
@@ -245,7 +249,7 @@ export class Terminal extends Component {
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("vscode");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands:[ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "echo":
@@ -255,56 +259,56 @@ export class Terminal extends Component {
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("spotify");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "chrome":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("chrome");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "todoist":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("todo-ist");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "trash":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("trash");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "about-nishil":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("about-nishil");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "terminal":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("terminal");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "settings":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("settings");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "sendmsg":
                 if (words[0] === "." || words.length === 0) {
                     this.props.openApp("gedit");
                 } else {
-                    result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "clear":
@@ -314,6 +318,14 @@ export class Terminal extends Component {
                 this.closeTerminal();
                 return;
             case "sudo":
+                if (rest === "hire-me") {
+                    ReactGA.event({
+                        category: "Easter Egg",
+                        action: "sudo hire-me",
+                    });
+                    result = "[sudo] password for nishil: ********<br>Permission granted. ✅<br>Initiating hiring sequence... <a class='text-ubt-blue underline' href='./files/Nishil-Bhimani-Resume.pdf' target='_blank'>opening resume</a>, drafting offer letter, clearing my calendar. 🚀<br>(in all seriousness — try the <span class='text-ubt-green'>gedit .</span> or <span class='text-ubt-green'>sendmsg</span> command to actually reach me)";
+                    break;
+                }
 
                 ReactGA.event({
                     category: "Sudo Access",
@@ -322,8 +334,63 @@ export class Terminal extends Component {
 
                 result = "<img class=' w-2/5' src='./images/memes/used-sudo-command.webp' />";
                 break;
+            case "whoami":
+                result = "nishil — B.Tech CSE undergrad, cybersecurity & OSINT enthusiast. Permissions: guest (you), root (me).";
+                break;
+            case "cat":
+                if (rest === "resume.pdf" || rest === "Nishil-Bhimani-Resume.pdf") {
+                    result = "Opening resume... <a class='text-ubt-blue underline' href='./files/Nishil-Bhimani-Resume.pdf' target='_blank' download>./files/Nishil-Bhimani-Resume.pdf</a>";
+                    window.open("./files/Nishil-Bhimani-Resume.pdf", "_blank");
+                } else if (rest === "secrets.txt") {
+                    result = "cat: secrets.txt: nice try 😏 — the only secret here is that I genuinely enjoy debugging build pipelines.";
+                } else if (rest === "" ) {
+                    result = "cat: missing file operand";
+                } else {
+                    result = `cat: ${rest}: No such file or directory`;
+                }
+                break;
+            case "ssh":
+                if (rest === "recruiter@nishil.dev") {
+                    result = "Connecting to recruiter@nishil.dev...<br>Connection established. 🤝<br>Welcome — my inbox (and resume) are open. Try <span class='text-ubt-green'>sendmsg</span> to reach out directly.";
+                } else if (rest === "") {
+                    result = "usage: ssh [user@host]";
+                } else {
+                    result = `ssh: connect to host ${rest.split('@')[1] || rest} port 22: Connection refused`;
+                }
+                break;
+            case "neofetch":
+                if (words[0] === "." || words.length === 0) {
+                    this.props.openApp("neofetch");
+                } else {
+                    result = this.notFoundMsg(main);
+                }
+                break;
+            case "htop":
+                if (words[0] === "." || words.length === 0) {
+                    this.props.openApp("htop");
+                } else {
+                    result = this.notFoundMsg(main);
+                }
+                break;
+            case "man":
+                if (rest === "nishil" || words.length === 0) {
+                    this.props.openApp("man-nishil");
+                } else {
+                    result = `No manual entry for ${rest}`;
+                }
+                break;
+            case "gh-stats":
+                if (words[0] === "." || words.length === 0) {
+                    this.props.openApp("github-stats");
+                } else {
+                    result = this.notFoundMsg(main);
+                }
+                break;
+            case "--help":
+                result = "Available Commands:<br>" + this.AVAILABLE_COMMANDS + "<br><br>Try: <span class='text-ubt-green'>neofetch</span>, <span class='text-ubt-green'>man nishil</span>, <span class='text-ubt-green'>cat resume.pdf</span>, or poke around for easter eggs. 👀";
+                break;
             default:
-                result = "Command '" + main + "' not found, or not yet implemented.<br>Available Commands: [ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg ]";
+                result = this.notFoundMsg(main);
         }
         document.getElementById(`row-result-${rowId}`).innerHTML = result;
         this.appendTerminalRow();
