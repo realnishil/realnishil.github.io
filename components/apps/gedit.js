@@ -18,10 +18,12 @@ export class Gedit extends Component {
 
     sendMessage = async () => {
         let name = $("#sender-name").val();
+        let email = $("#sender-email").val();
         let subject = $("#sender-subject").val();
         let message = $("#sender-message").val();
 
         name = name.trim();
+        email = email.trim();
         subject = subject.trim();
         message = message.trim();
 
@@ -30,6 +32,13 @@ export class Gedit extends Component {
         if (name.length === 0) {
             $("#sender-name").val('');
             $("#sender-name").attr("placeholder", "Name must not be Empty!");
+            error = true;
+        }
+
+        // very light email format check — not strict validation, just a sanity guard
+        if (email.length === 0 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            $("#sender-email").val('');
+            $("#sender-email").attr("placeholder", "Enter a valid email so I can reply!");
             error = true;
         }
 
@@ -44,9 +53,16 @@ export class Gedit extends Component {
 
         const serviceID = process.env.NEXT_PUBLIC_SERVICE_ID;
         const templateID = process.env.NEXT_PUBLIC_TEMPLATE_ID;
+
+        // Auto-build a proper subject line instead of relying on the visitor to write one.
+        const finalSubject = subject.length > 0
+            ? `Portfolio Contact: ${subject} — from ${name}`
+            : `New message from ${name} via realnishil.github.io`;
+
         const templateParams = {
             'name': name,
-            'subject': subject,
+            'reply_to': email,
+            'subject': finalSubject,
             'message': message,
         }
 
@@ -60,7 +76,7 @@ export class Gedit extends Component {
 
         ReactGA.event({
             category: "Send Message",
-            action: `${name}, ${subject}, ${message}`
+            action: `${name}, ${finalSubject}, ${message}`
         });
 
     }
@@ -77,16 +93,20 @@ export class Gedit extends Component {
                 <div className="relative flex-grow flex flex-col bg-ub-gedit-dark font-normal windowMainScreen">
                     <div className="absolute left-0 top-0 h-full px-2 bg-ub-gedit-darker"></div>
                     <div className="relative">
-                        <input id="sender-name" className=" w-full text-ubt-gedit-orange focus:bg-ub-gedit-light outline-none font-medium text-sm pl-6 py-0.5 bg-transparent" placeholder="Your Email / Name :" spellCheck="false" autoComplete="off" type="text" />
+                        <input id="sender-name" className=" w-full text-ubt-gedit-orange focus:bg-ub-gedit-light outline-none font-medium text-sm pl-6 py-0.5 bg-transparent" placeholder="Your Name :" spellCheck="false" autoComplete="off" type="text" />
                         <span className="absolute left-1 top-1/2 transform -translate-y-1/2 font-bold light text-sm text-ubt-gedit-blue">1</span>
                     </div>
                     <div className="relative">
-                        <input id="sender-subject" className=" w-full my-1 text-ubt-gedit-blue focus:bg-ub-gedit-light gedit-subject outline-none text-sm font-normal pl-6 py-0.5 bg-transparent" placeholder="subject (may be a feedback for this website!)" spellCheck="false" autoComplete="off" type="text" />
+                        <input id="sender-email" className=" w-full my-1 text-ubt-gedit-orange focus:bg-ub-gedit-light outline-none font-medium text-sm pl-6 py-0.5 bg-transparent" placeholder="Your Email (so I can reply) :" spellCheck="false" autoComplete="off" type="email" />
                         <span className="absolute left-1 top-1/2 transform -translate-y-1/2 font-bold  text-sm text-ubt-gedit-blue">2</span>
+                    </div>
+                    <div className="relative">
+                        <input id="sender-subject" className=" w-full my-1 text-ubt-gedit-blue focus:bg-ub-gedit-light gedit-subject outline-none text-sm font-normal pl-6 py-0.5 bg-transparent" placeholder="subject (optional — I'll format it nicely either way)" spellCheck="false" autoComplete="off" type="text" />
+                        <span className="absolute left-1 top-1/2 transform -translate-y-1/2 font-bold  text-sm text-ubt-gedit-blue">3</span>
                     </div>
                     <div className="relative flex-grow">
                         <textarea id="sender-message" className=" w-full gedit-message font-light text-sm resize-none h-full windowMainScreen outline-none tracking-wider pl-6 py-1 bg-transparent" placeholder="Message" spellCheck="false" autoComplete="none" type="text" />
-                        <span className="absolute left-1 top-1 font-bold  text-sm text-ubt-gedit-blue">3</span>
+                        <span className="absolute left-1 top-1 font-bold  text-sm text-ubt-gedit-blue">4</span>
                     </div>
                 </div>
                 {
@@ -108,3 +128,4 @@ export default Gedit;
 export const displayGedit = () => {
     return <Gedit> </Gedit>;
 }
+
