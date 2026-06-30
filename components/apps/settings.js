@@ -11,6 +11,10 @@ export function Settings(props) {
         "wall-6": "./images/wallpapers/wall-6.webp",
         "wall-7": "./images/wallpapers/wall-7.webp",
         "wall-8": "./images/wallpapers/wall-8.webp",
+        "wall-9": "./images/wallpapers/wall-9.webp",
+        "wall-10": "./images/wallpapers/wall-10.webp",
+        "wall-11": "./images/wallpapers/wall-11.webp",
+        "wall-12": "./images/wallpapers/wall-12.webp",
     };
 
     let changeBackgroundImage = (e) => {
