@@ -174,7 +174,7 @@ export class Terminal extends Component {
         $("#close-terminal").trigger('click');
     }
 
-    AVAILABLE_COMMANDS = "[ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg, whoami, neofetch, htop, man, gh-stats, cat, ssh, --help ]";
+    AVAILABLE_COMMANDS = "[ cd, ls, pwd, echo, clear, exit, mkdir, code, spotify, chrome, about-nishil, todoist, trash, settings, sendmsg, whoami, neofetch, htop, man, gh-stats, achievements, cat, ssh, --help ]";
 
     notFoundMsg = (main) => `Command '${main}' not found, or not yet implemented.<br>Available Commands: ${this.AVAILABLE_COMMANDS}`;
 
@@ -377,6 +377,13 @@ export class Terminal extends Component {
                     this.props.openApp("man-nishil");
                 } else {
                     result = `No manual entry for ${rest}`;
+                }
+                break;
+            case "achievements":
+                if (words[0] === "." || words.length === 0) {
+                    this.props.openApp("achievements");
+                } else {
+                    result = this.notFoundMsg(main);
                 }
                 break;
             case "gh-stats":

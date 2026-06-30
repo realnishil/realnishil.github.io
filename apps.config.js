@@ -23,6 +23,7 @@ const Neofetch = dynamic(() => import('./components/apps/neofetch'), { ssr: fals
 const Htop = dynamic(() => import('./components/apps/htop'), { ssr: false, loading: AppLoading });
 const ManPage = dynamic(() => import('./components/apps/manpage'), { ssr: false, loading: AppLoading });
 const GithubStats = dynamic(() => import('./components/apps/githubstats'), { ssr: false, loading: AppLoading });
+const Achievements = dynamic(() => import('./components/apps/achievements'), { ssr: false, loading: AppLoading });
 
 const apps = [
     {
@@ -141,6 +142,15 @@ const apps = [
         favourite: false,
         desktop_shortcut: true,
         screen: () => <GithubStats> </GithubStats>,
+    },
+    {
+        id: "achievements",
+        title: "Achievements",
+        icon: './themes/Yaru/apps/achievements.png',
+        disabled: false,
+        favourite: true,
+        desktop_shortcut: true,
+        screen: () => <Achievements> </Achievements>,
     },
     {
         id: "github",
