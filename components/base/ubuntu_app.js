@@ -19,7 +19,7 @@ export class UbuntuApp extends Component {
                 tabIndex={0}
             >
                 <div className="relative">
-                    <img width="40px" height="40px" className="mb-1 w-10" src={this.props.icon} alt={"Ubuntu " + this.props.name} />
+                    <img width="40px" height="40px" className="mb-1 w-10" loading="lazy" decoding="async" src={this.props.icon} alt={"Ubuntu " + this.props.name} />
                     {this.props.isExternalApp && (
                         <img 
                             src="./themes/Yaru/status/arrow-up-right.svg" 

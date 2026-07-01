@@ -54,6 +54,7 @@ export default function Meta() {
             <link rel="icon" type="image/png" sizes="16x16" href="images/logos/favicon-16x16.png" />
             <link rel="apple-touch-icon" sizes="180x180" href="images/logos/apple-touch-icon.png" />
             <meta name="msapplication-TileColor" content="#9966FF" />
+            <link rel="preload" href="images/wallpapers/wall-1.webp" as="image" type="image/webp" />
             <link rel="preload" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" as="style" />
             <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet"></link>
         </Head>

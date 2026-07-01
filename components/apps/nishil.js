@@ -111,7 +111,7 @@ function About() {
     return (
         <>
             <div className="w-20 md:w-28 my-4 bg-white rounded-full overflow-hidden">
-                <img className="w-full" src="./images/logos/profile.png" alt="Nishil Bhimani" />
+                <img className="w-full" loading="lazy" decoding="async" src="./images/logos/profile.png" alt="Nishil Bhimani" />
             </div>
             <div className=" mt-4 md:mt-8 text-lg md:text-2xl text-center px-1">
                 <div>my name is <span className="font-bold">Nishil Bhimani</span> ,</div>
